@@ -51,7 +51,7 @@ export default function HowItWorksSection() {
             style={{ background: `linear-gradient(to right, ${C.orange}40, ${C.orangeLight}40)` }}
           />
 
-          {STEPS.map((step, i) => (
+          {STEPS.map((step) => (
             <motion.div
               key={step.num}
               variants={step.variants}
