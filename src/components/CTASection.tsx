@@ -6,7 +6,7 @@ const TRUST_BADGES = [
   { icon: '⚡', label: '2-min setup'    },
 ]
 
-export default function CTASection() {
+export default function CTASection({ onOpenModal }: { onOpenModal: () => void }) {
   return (
     <section
       className="py-24 text-center"
@@ -31,7 +31,8 @@ export default function CTASection() {
             whileHover={{ scale: 1.05, y: -3, boxShadow: '0 20px 40px rgba(0,0,0,0.22)' }}
             whileTap={{ scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className="bg-white font-bold text-lg px-10 py-4 rounded-xl shadow-lg"
+            onClick={onOpenModal}
+          className="bg-white font-bold text-lg px-10 py-4 rounded-xl shadow-lg"
             style={{ color: C.orange }}
           >
             Try Free – 50 Emails
@@ -41,6 +42,7 @@ export default function CTASection() {
             whileHover={{ scale: 1.04, y: -2, background: 'rgba(255,255,255,0.12)' }}
             whileTap={{ scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            onClick={onOpenModal}
             className="border-2 border-white/60 text-white font-semibold text-lg px-10 py-4 rounded-xl transition-colors"
           >
             Start Premium Trial – 7 Days Free

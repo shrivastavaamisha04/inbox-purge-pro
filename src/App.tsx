@@ -4,6 +4,7 @@ import { C, ease } from './lib/design'
 import { PrimaryButton } from './components/ui'
 import AnimatedBackground    from './components/AnimatedBackground'
 import LoadingScreen         from './components/LoadingScreen'
+import WaitlistModal         from './components/WaitlistModal'
 import HeroSection           from './components/HeroSection'
 import ProblemSection        from './components/ProblemSection'
 import HowAIWorksSection     from './components/HowAIWorksSection'
@@ -17,14 +18,14 @@ import CTASection            from './components/CTASection'
 import SiteFooter            from './components/SiteFooter'
 
 const NAV_LINKS = [
-  { label: 'Problem',    href: '#problem'     },
+  { label: 'Problem',      href: '#problem'     },
   { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Pricing',    href: '#pricing'     },
-  { label: 'FAQ',        href: '#faq'         },
+  { label: 'Pricing',      href: '#pricing'     },
+  { label: 'FAQ',          href: '#faq'         },
 ]
 
 // ── Nav ───────────────────────────────────────────────────────────────────────
-function SiteNav({ loading }: { loading: boolean }) {
+function SiteNav({ loading, onOpenModal }: { loading: boolean; onOpenModal: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const handleLink = (href: string) => {
@@ -63,7 +64,7 @@ function SiteNav({ loading }: { loading: boolean }) {
 
         {/* Right side */}
         <div className="flex items-center gap-3">
-          <PrimaryButton className="hidden md:inline-flex px-5 py-2.5 text-base">
+          <PrimaryButton onClick={onOpenModal} className="hidden md:inline-flex px-5 py-2.5 text-base">
             Try Free
           </PrimaryButton>
 
@@ -115,7 +116,7 @@ function SiteNav({ loading }: { loading: boolean }) {
                   {label}
                 </button>
               ))}
-              <PrimaryButton className="w-full">Try Free – No Card Required</PrimaryButton>
+              <PrimaryButton onClick={onOpenModal} className="w-full">Try Free – No Card Required</PrimaryButton>
             </div>
           </motion.div>
         )}
@@ -127,6 +128,9 @@ function SiteNav({ loading }: { loading: boolean }) {
 // ── App ───────────────────────────────────────────────────────────────────────
 export default function App() {
   const [loading, setLoading] = useState(true)
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const openModal = () => setModalOpen(true)
 
   return (
     <>
@@ -134,22 +138,24 @@ export default function App() {
         {loading && <LoadingScreen key="loader" onComplete={() => setLoading(false)} />}
       </AnimatePresence>
 
+      <WaitlistModal open={modalOpen} onClose={() => setModalOpen(false)} />
+
       <div style={{ background: C.cream, color: C.text }} className="relative min-h-screen overflow-x-hidden">
         <AnimatedBackground />
 
         <div className="relative z-10">
-          <SiteNav loading={loading} />
-          <HeroSection loading={loading} />
+          <SiteNav loading={loading} onOpenModal={openModal} />
+          <HeroSection loading={loading} onOpenModal={openModal} />
           <ProblemSection />
           <HowAIWorksSection />
-          <CustomRulesSection />
+          <CustomRulesSection onOpenModal={openModal} />
           <PersonaSection />
           <ComparisonSection />
-<HowItWorksSection />
-          <PricingSection />
+          <HowItWorksSection />
+          <PricingSection onOpenModal={openModal} />
           <FAQSection />
-          <CTASection />
-<SiteFooter />
+          <CTASection onOpenModal={openModal} />
+          <SiteFooter />
         </div>
       </div>
     </>

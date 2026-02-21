@@ -26,7 +26,7 @@ const PRO_FEATURES_HIDDEN = [
   '💬 Priority support (email + chat)',
 ]
 
-export default function PricingSection() {
+export default function PricingSection({ onOpenModal }: { onOpenModal: () => void }) {
   const [showAll, setShowAll] = useState(false)
 
   return (
@@ -70,7 +70,7 @@ export default function PricingSection() {
               </ul>
 
               <div className="mt-auto">
-                <SecondaryButton className="w-full">Start Free</SecondaryButton>
+                <SecondaryButton onClick={onOpenModal} className="w-full">Start Free</SecondaryButton>
                 <p className="text-xs text-center mt-3" style={{ color: C.textMid }}>
                   Perfect for trying out the magic ✨
                 </p>
@@ -149,7 +149,7 @@ export default function PricingSection() {
                 </button>
 
                 <div className="mt-auto">
-                  <PrimaryButton className="w-full text-center">Start Free Trial</PrimaryButton>
+                  <PrimaryButton onClick={onOpenModal} className="w-full text-center">Start Free Trial</PrimaryButton>
                   <p className="text-xs text-center mt-3" style={{ color: C.textMid }}>
                     Cancel anytime · No contracts
                   </p>

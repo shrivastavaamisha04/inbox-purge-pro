@@ -143,7 +143,7 @@ function DemoPanel({ demoIdx, active }: { demoIdx: number; active: boolean }) {
 }
 
 // ── CustomRulesSection ────────────────────────────────────────────────────────
-export default function CustomRulesSection() {
+export default function CustomRulesSection({ onOpenModal }: { onOpenModal: () => void }) {
   const [demoIdx, setDemoIdx] = useState(0)
   const [active, setActive] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -206,7 +206,7 @@ export default function CustomRulesSection() {
         </motion.div>
 
         <div className="text-center">
-          <PrimaryButton className="px-10">Try It Free</PrimaryButton>
+          <PrimaryButton onClick={onOpenModal} className="px-10">Try It Free</PrimaryButton>
           <p className="text-sm mt-3" style={{ color: C.textMid }}>Included in Premium · Test rules before applying</p>
         </div>
       </div>

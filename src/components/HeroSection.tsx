@@ -88,7 +88,7 @@ function EmailVisual() {
 }
 
 // ── HeroSection ───────────────────────────────────────────────────────────────
-export default function HeroSection({ loading }: { loading: boolean }) {
+export default function HeroSection({ loading, onOpenModal }: { loading: boolean; onOpenModal: () => void }) {
   const scrollTo = (id: string) =>
     document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
 
@@ -155,7 +155,7 @@ export default function HeroSection({ loading }: { loading: boolean }) {
 
           {/* CTAs */}
           <motion.div variants={fadeUpChild} className="flex flex-wrap gap-4 justify-center md:justify-start">
-            <PrimaryButton className="px-8 py-4">Try Free – No Card Required</PrimaryButton>
+            <PrimaryButton onClick={onOpenModal} className="px-8 py-4">Try Free – No Card Required</PrimaryButton>
             <SecondaryButton onClick={() => scrollTo('#problem')} className="px-7 py-4">
               See How It Works ↓
             </SecondaryButton>
