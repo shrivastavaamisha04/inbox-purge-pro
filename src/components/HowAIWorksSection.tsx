@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { C, VP, stagger, fadeUpChild, slideLeft, slideRight, fadeUp } from '../lib/design'
+import { C, VP, slideLeft, slideRight, fadeUp } from '../lib/design'
 import { SectionHeading, TiltCard } from './ui'
 
 const AI_CARDS = [
