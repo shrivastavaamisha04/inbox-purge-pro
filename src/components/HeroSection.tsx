@@ -139,8 +139,7 @@ export default function HeroSection({ loading, onOpenModal }: { loading: boolean
 
           {/* Subheadline */}
           <motion.p variants={fadeUpChild} className="text-xl mb-6 max-w-xl leading-relaxed" style={{ color: C.textMid }}>
-            The only email cleaner with AI that learns <strong>YOUR</strong> behavior and speaks <strong>YOUR</strong> language.
-            No coding. Just tell it what you want.
+            AI that learns from behavior, not generic rules.
           </motion.p>
 
           {/* Taglines */}
@@ -149,7 +148,7 @@ export default function HeroSection({ loading, onOpenModal }: { loading: boolean
               ✨ <span><strong>Free:</strong> Clean 50 emails with Basic AI</span>
             </div>
             <div className="flex items-center gap-2 justify-center md:justify-start text-base font-medium" style={{ color: C.navyMid }}>
-              🧠 <span><strong>Premium:</strong> AI that gets smarter + Custom rules in plain English</span>
+              🧠 <span><strong>Premium:</strong> Behavioral learning + Custom rules in plain English</span>
             </div>
           </motion.div>
 
