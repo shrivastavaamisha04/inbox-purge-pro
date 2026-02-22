@@ -2,14 +2,13 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { C } from '../lib/design'
 
-const TARGET = new Date('2026-02-23T00:00:00')
+const TARGET = new Date(Date.now() + 24 * 60 * 60 * 1000)
 
 function getCountdown() {
   const diff = TARGET.getTime() - Date.now()
-  if (diff <= 0) return { days: 0, hours: 0, minutes: 0 }
+  if (diff <= 0) return { hours: 0, minutes: 0 }
   return {
-    days:    Math.floor(diff / 864e5),
-    hours:   Math.floor((diff % 864e5) / 36e5),
+    hours:   Math.floor(diff / 36e5),
     minutes: Math.floor((diff % 36e5) / 6e4),
   }
 }
@@ -105,7 +104,6 @@ export default function WaitlistModal({
   }
 
   const CLOCK = [
-    { value: countdown.days,    label: 'Days'    },
     { value: countdown.hours,   label: 'Hours'   },
     { value: countdown.minutes, label: 'Mins'    },
   ]
@@ -193,7 +191,7 @@ export default function WaitlistModal({
                       </div>
 
                       <h2 className="text-2xl font-bold text-center mb-1.5" style={{ color: C.navy }}>
-                        🚀 Launching in 2 Days!
+                        ⏰ Early Access – 24 Hours Left!
                       </h2>
                       <p className="text-center text-sm mb-7" style={{ color: C.textMid }}>
                         Join the waitlist and be the first to clean your inbox
