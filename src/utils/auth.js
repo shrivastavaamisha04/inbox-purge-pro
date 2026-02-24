@@ -1,6 +1,7 @@
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const API_URL = import.meta.env.VITE_API_URL;
 const REDIRECT_URI = `${API_URL}/api/auth/callback`;
+const API_ORIGIN = new URL(API_URL).origin;
 
 export const initiateGoogleLogin = () => {
   return new Promise((resolve, reject) => {
@@ -34,7 +35,7 @@ export const initiateGoogleLogin = () => {
 
     // Listen for message from popup
     const messageHandler = async (event) => {
-      if (event.origin !== 'http://localhost:3000') return;
+      if (event.origin !== API_ORIGIN) return;
 
       if (event.data.type === 'GOOGLE_AUTH_SUCCESS') {
         window.removeEventListener('message', messageHandler);
