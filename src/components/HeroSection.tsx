@@ -111,7 +111,7 @@ export default function HeroSection({ loading, onOpenModal }: { loading: boolean
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold"
               style={{ background: `linear-gradient(135deg, ${C.orange}, ${C.orangeLight})`, color: '#fff', boxShadow: `0 4px 16px rgba(255,107,53,0.40)` }}
             >
-              🚀 Launching in 2 Days!
+              ✨ BETA version live
             </motion.div>
           </motion.div>
 
@@ -145,16 +145,16 @@ export default function HeroSection({ loading, onOpenModal }: { loading: boolean
           {/* Taglines */}
           <motion.div variants={fadeUpChild} className="flex flex-col gap-2 mb-8">
             <div className="flex items-center gap-2 justify-center md:justify-start text-base font-medium" style={{ color: C.navyMid }}>
-              ✨ <span><strong>Free:</strong> Clean 50 emails with Basic AI</span>
+              🧠 <span><strong>Behavioral AI</strong> that learns your preferences — not generic rules</span>
             </div>
             <div className="flex items-center gap-2 justify-center md:justify-start text-base font-medium" style={{ color: C.navyMid }}>
-              🧠 <span><strong>Premium:</strong> Behavioral learning + Custom rules in plain English</span>
+              📝 <span><strong>Custom rules</strong> in plain English + daily digest at 7 PM</span>
             </div>
           </motion.div>
 
           {/* CTAs */}
           <motion.div variants={fadeUpChild} className="flex flex-wrap gap-4 justify-center md:justify-start">
-            <PrimaryButton onClick={onOpenModal} className="px-8 py-4">Try Free – No Card Required</PrimaryButton>
+            <PrimaryButton onClick={onOpenModal} className="px-8 py-4">Start Free — 14 Days Free</PrimaryButton>
             <SecondaryButton onClick={() => scrollTo('#problem')} className="px-7 py-4">
               See How It Works ↓
             </SecondaryButton>
@@ -162,7 +162,7 @@ export default function HeroSection({ loading, onOpenModal }: { loading: boolean
 
           {/* Trust */}
           <motion.p variants={fadeUpChild} className="text-sm mt-5" style={{ color: C.textMid }}>
-            ✓ No credit card for free tier &nbsp;·&nbsp; ✓ Works with any Gmail &nbsp;·&nbsp; ✓ 2-min setup
+            ✓ No credit card required &nbsp;·&nbsp; ✓ Works with any Gmail &nbsp;·&nbsp; ✓ 2-min setup
           </motion.p>
         </motion.div>
 

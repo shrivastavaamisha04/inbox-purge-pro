@@ -27,6 +27,14 @@ const AI_CARDS = [
     statIcon: '🚀',
     variants: slideRight,
   },
+  {
+    icon: '🗂️',
+    title: 'Starts Smart from Day One',
+    desc: '55 pre-built rules covering banking, travel, healthcare, e-commerce, government and more. Enable the ones you want in one tap — no configuration required.',
+    stat: 'Ready-to-use rule library',
+    statIcon: '📚',
+    variants: fadeUp,
+  },
 ]
 
 // Mini sparkline for the "gets smarter" card
@@ -58,11 +66,11 @@ export default function HowAIWorksSection() {
       <div className="container mx-auto px-6">
         <SectionHeading
           label="🧠 Smart AI"
-          title="Three Ways Inbox Purge Gets Smarter"
+          title="Four Ways Inbox Purge Gets Smarter"
           subtitle="This isn't keyword filtering. It's behavioral AI that adapts to you — and only you."
         />
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {AI_CARDS.map((card) => (
             <motion.div
               key={card.title}
@@ -72,7 +80,7 @@ export default function HowAIWorksSection() {
               viewport={VP}
             >
               <TiltCard
-                className="p-8 h-full"
+                className="p-8 h-full flex flex-col"
                 style={{ background: C.white, border: `1px solid ${C.border}`, boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
               >
                 {/* Icon */}
@@ -84,11 +92,11 @@ export default function HowAIWorksSection() {
                 </div>
 
                 <h3 className="text-xl font-bold mb-3" style={{ color: C.navy }}>{card.title}</h3>
-                <p className="leading-relaxed mb-5" style={{ color: C.textMid }}>{card.desc}</p>
+                <p className="leading-relaxed mb-5 flex-1" style={{ color: C.textMid }}>{card.desc}</p>
 
                 {/* Stat / Visual */}
                 {card.icon === '📈' ? (
-                  <div className="mt-auto pt-3 border-t" style={{ borderColor: C.border }}>
+                  <div className="pt-3 border-t" style={{ borderColor: C.border }}>
                     <div className="flex items-end justify-between">
                       <div>
                         <div className="text-xs font-semibold mb-1" style={{ color: C.textMid }}>Accuracy</div>

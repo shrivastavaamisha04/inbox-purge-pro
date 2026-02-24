@@ -1,21 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { C, ease } from './lib/design'
 import { PrimaryButton } from './components/ui'
 import AnimatedBackground    from './components/AnimatedBackground'
 import LoadingScreen         from './components/LoadingScreen'
-import WaitlistModal         from './components/WaitlistModal'
 import HeroSection           from './components/HeroSection'
 import ProblemSection        from './components/ProblemSection'
 import HowAIWorksSection     from './components/HowAIWorksSection'
 import CustomRulesSection    from './components/CustomRulesSection'
 import PersonaSection        from './components/PersonaSection'
-import ComparisonSection     from './components/ComparisonSection'
 import PricingSection        from './components/PricingSection'
 import HowItWorksSection     from './components/HowItWorksSection'
 import FAQSection            from './components/FAQSection'
 import CTASection            from './components/CTASection'
 import SiteFooter            from './components/SiteFooter'
+import Dashboard             from './components/dashboard/Dashboard'
+import PersonaSelection      from './components/premium/PersonaSelection'
+import Settings              from './components/settings/Settings'
+import LoginPage             from './components/auth/LoginPage'
+import AdminDashboard        from './components/admin/AdminDashboard'
+import { restoreSession, getAccounts } from './utils/session'
 
 const NAV_LINKS = [
   { label: 'Problem',      href: '#problem'     },
@@ -65,7 +70,7 @@ function SiteNav({ loading, onOpenModal }: { loading: boolean; onOpenModal: () =
         {/* Right side */}
         <div className="flex items-center gap-3">
           <PrimaryButton onClick={onOpenModal} className="hidden md:inline-flex px-5 py-2.5 text-base">
-            Try Free
+            Start Free
           </PrimaryButton>
 
           {/* Hamburger */}
@@ -116,7 +121,7 @@ function SiteNav({ loading, onOpenModal }: { loading: boolean; onOpenModal: () =
                   {label}
                 </button>
               ))}
-              <PrimaryButton onClick={onOpenModal} className="w-full">Try Free – No Card Required</PrimaryButton>
+              <PrimaryButton onClick={onOpenModal} className="w-full">Start Free — 14 Days Free</PrimaryButton>
             </div>
           </motion.div>
         )}
@@ -125,12 +130,28 @@ function SiteNav({ loading, onOpenModal }: { loading: boolean; onOpenModal: () =
   )
 }
 
-// ── App ───────────────────────────────────────────────────────────────────────
-export default function App() {
+// ── Landing ───────────────────────────────────────────────────────────────────
+function Landing() {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
-  const [modalOpen, setModalOpen] = useState(false)
+  const [sessionChecked, setSessionChecked] = useState(false)
 
-  const openModal = () => setModalOpen(true)
+  // On mount: try to restore session for auto-login
+  useEffect(() => {
+    restoreSession().then((account) => {
+      if (account) {
+        navigate('/dashboard')
+      } else if (getAccounts().length > 0) {
+        navigate('/login')
+      } else {
+        setSessionChecked(true)
+      }
+    })
+  }, [navigate])
+
+  const goOnboarding = () => navigate('/onboarding')
+
+  if (!sessionChecked && !loading) return null
 
   return (
     <>
@@ -138,26 +159,39 @@ export default function App() {
         {loading && <LoadingScreen key="loader" onComplete={() => setLoading(false)} />}
       </AnimatePresence>
 
-      <WaitlistModal open={modalOpen} onClose={() => setModalOpen(false)} />
-
       <div style={{ background: C.cream, color: C.text }} className="relative min-h-screen overflow-x-hidden">
         <AnimatedBackground />
 
         <div className="relative z-10">
-          <SiteNav loading={loading} onOpenModal={openModal} />
-          <HeroSection loading={loading} onOpenModal={openModal} />
+          <SiteNav loading={loading} onOpenModal={goOnboarding} />
+          <HeroSection loading={loading} onOpenModal={goOnboarding} />
           <ProblemSection />
           <HowAIWorksSection />
-          <CustomRulesSection onOpenModal={openModal} />
+          <CustomRulesSection onPremium={goOnboarding} />
           <PersonaSection />
-          <ComparisonSection />
           <HowItWorksSection />
-          <PricingSection onOpenModal={openModal} />
+          <PricingSection onPremium={goOnboarding} />
           <FAQSection />
-          <CTASection onOpenModal={openModal} />
+          <CTASection onPremium={goOnboarding} />
           <SiteFooter />
         </div>
       </div>
     </>
+  )
+}
+
+// ── App ───────────────────────────────────────────────────────────────────────
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/"           element={<Landing />}          />
+        <Route path="/dashboard"  element={<Dashboard />}        />
+        <Route path="/onboarding" element={<PersonaSelection />} />
+        <Route path="/settings"   element={<Settings />}         />
+        <Route path="/login"      element={<LoginPage />}        />
+        <Route path="/admin"      element={<AdminDashboard />}   />
+      </Routes>
+    </BrowserRouter>
   )
 }

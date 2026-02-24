@@ -6,7 +6,7 @@ const TRUST_BADGES = [
   { icon: '⚡', label: '2-min setup'    },
 ]
 
-export default function CTASection({ onOpenModal }: { onOpenModal: () => void }) {
+export default function CTASection({ onPremium }: { onPremium: () => void }) {
   return (
     <section
       className="py-24 text-center"
@@ -26,30 +26,20 @@ export default function CTASection({ onOpenModal }: { onOpenModal: () => void })
           Join 100+ users who've already cleaned 50,000+ emails. Takes 2 minutes to set up.
         </p>
 
-        <div className="flex flex-wrap gap-4 justify-center mb-8">
+        <div className="flex flex-wrap gap-4 justify-center mb-4">
           <motion.button
             whileHover={{ scale: 1.05, y: -3, boxShadow: '0 20px 40px rgba(0,0,0,0.22)' }}
             whileTap={{ scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            onClick={onOpenModal}
-          className="bg-white font-bold text-lg px-10 py-4 rounded-xl shadow-lg"
+            onClick={onPremium}
+            className="bg-white font-bold text-lg px-10 py-4 rounded-xl shadow-lg"
             style={{ color: C.orange }}
           >
-            Try Free – 50 Emails
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.04, y: -2, background: 'rgba(255,255,255,0.12)' }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            onClick={onOpenModal}
-            className="border-2 border-white/60 text-white font-semibold text-lg px-10 py-4 rounded-xl transition-colors"
-          >
-            Start Premium Trial – 7 Days Free
+            Start Free — No Card Required
           </motion.button>
         </div>
 
-        <p className="text-sm text-white/60 mb-10">No credit card required for the free tier</p>
+        <p className="text-sm text-white/70 mb-10">14-day free trial · ₹89/month after · Cancel anytime</p>
 
         {/* Trust badges */}
         <div className="flex flex-wrap gap-4 justify-center">
