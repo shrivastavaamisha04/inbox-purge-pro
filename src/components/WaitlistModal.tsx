@@ -4,17 +4,6 @@ import { C } from '../lib/design'
 
 const API_URL = import.meta.env.VITE_API_URL
 
-const TARGET = new Date(Date.now() + 24 * 60 * 60 * 1000)
-
-function getCountdown() {
-  const diff = TARGET.getTime() - Date.now()
-  if (diff <= 0) return { hours: 0, minutes: 0 }
-  return {
-    hours:   Math.floor(diff / 36e5),
-    minutes: Math.floor((diff % 36e5) / 6e4),
-  }
-}
-
 const CONFETTI_COLORS = ['#FF6B35', '#FF8C42', '#FFD166', '#06D6A0', '#118AB2', '#EF476F']
 
 // Pre-computed so values are stable across renders
@@ -62,13 +51,6 @@ export default function WaitlistModal({
   onClose: () => void
 }) {
   const [submitted, setSubmitted] = useState(false)
-  const [countdown, setCountdown] = useState(getCountdown)
-
-  // Countdown tick
-  useEffect(() => {
-    const t = setInterval(() => setCountdown(getCountdown()), 60_000)
-    return () => clearInterval(t)
-  }, [])
 
   // ESC to close + lock scroll
   const handleKey = useCallback(
@@ -104,11 +86,6 @@ export default function WaitlistModal({
     })
     setSubmitted(true)
   }
-
-  const CLOCK = [
-    { value: countdown.hours,   label: 'Hours'   },
-    { value: countdown.minutes, label: 'Mins'    },
-  ]
 
   return (
     <AnimatePresence>
@@ -175,28 +152,12 @@ export default function WaitlistModal({
                   ) : (
                     /* ── Form ── */
                     <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                      {/* Countdown tiles */}
-                      <div className="flex justify-center gap-3 mb-7">
-                        {CLOCK.map(({ value, label }) => (
-                          <div key={label} className="text-center">
-                            <div
-                              className="w-[4.5rem] h-[4.5rem] rounded-2xl flex items-center justify-center text-2xl font-bold mb-1.5"
-                              style={{ background: 'rgba(255,107,53,0.08)', color: C.orange }}
-                            >
-                              {String(value).padStart(2, '0')}
-                            </div>
-                            <div className="text-xs font-semibold tracking-wide uppercase" style={{ color: C.textMid }}>
-                              {label}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      <h2 className="text-2xl font-bold text-center mb-1.5" style={{ color: C.navy }}>
-                        ⏰ Early Access – 24 Hours Left!
+                      <div className="text-4xl text-center mb-4">📬</div>
+                      <h2 className="text-2xl font-bold text-center mb-2" style={{ color: C.navy }}>
+                        Request Early Access
                       </h2>
-                      <p className="text-center text-sm mb-7" style={{ color: C.textMid }}>
-                        Join the waitlist and be the first to clean your inbox
+                      <p className="text-center text-sm mb-7 leading-relaxed" style={{ color: C.textMid }}>
+                        We're rolling out access gradually. Drop your email and we'll send you a personal invite when your spot is ready.
                       </p>
 
                       <form onSubmit={handleSubmit} className="space-y-3">
@@ -231,7 +192,7 @@ export default function WaitlistModal({
                             boxShadow: `0 8px 24px rgba(255,107,53,0.30)`,
                           }}
                         >
-                          Join Waitlist →
+                          Get Early Access →
                         </motion.button>
                       </form>
 
