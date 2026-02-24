@@ -30,9 +30,9 @@ export function SectionHeading({
       className={`mb-14 ${align === 'center' ? 'text-center' : 'text-left'}`}
     >
       {label && <SectionLabel>{label}</SectionLabel>}
-      <h2 className="text-4xl md:text-5xl font-bold leading-tight" style={{ color: C.navy }}>{title}</h2>
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight" style={{ color: C.navy }}>{title}</h2>
       {subtitle && (
-        <p className={`text-lg mt-4 leading-relaxed ${align === 'center' ? 'max-w-xl mx-auto' : 'max-w-2xl'}`} style={{ color: C.textMid }}>
+        <p className={`text-sm md:text-base mt-4 leading-relaxed ${align === 'center' ? 'max-w-xl mx-auto' : 'max-w-2xl'}`} style={{ color: C.textMid }}>
           {subtitle}
         </p>
       )}

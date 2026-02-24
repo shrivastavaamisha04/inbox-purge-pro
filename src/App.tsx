@@ -12,6 +12,7 @@ import CustomRulesSection    from './components/CustomRulesSection'
 import PersonaSection        from './components/PersonaSection'
 import PricingSection        from './components/PricingSection'
 import HowItWorksSection     from './components/HowItWorksSection'
+import EarlyAccessSection    from './components/EarlyAccessSection'
 import FAQSection            from './components/FAQSection'
 import CTASection            from './components/CTASection'
 import SiteFooter            from './components/SiteFooter'
@@ -21,6 +22,7 @@ import Settings              from './components/settings/Settings'
 import LoginPage             from './components/auth/LoginPage'
 import AdminDashboard        from './components/admin/AdminDashboard'
 import { restoreSession, getAccounts } from './utils/session'
+import WaitlistModal            from './components/WaitlistModal'
 
 const NAV_LINKS = [
   { label: 'Problem',      href: '#problem'     },
@@ -135,6 +137,7 @@ function Landing() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [sessionChecked, setSessionChecked] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
   // On mount: try to restore session for auto-login
   useEffect(() => {
@@ -149,7 +152,7 @@ function Landing() {
     })
   }, [navigate])
 
-  const goOnboarding = () => navigate('/onboarding')
+  const goOnboarding = () => setModalOpen(true)
 
   if (!sessionChecked && !loading) return null
 
@@ -158,6 +161,8 @@ function Landing() {
       <AnimatePresence>
         {loading && <LoadingScreen key="loader" onComplete={() => setLoading(false)} />}
       </AnimatePresence>
+
+      <WaitlistModal open={modalOpen} onClose={() => setModalOpen(false)} />
 
       <div style={{ background: C.cream, color: C.text }} className="relative min-h-screen overflow-x-hidden">
         <AnimatedBackground />
@@ -171,6 +176,7 @@ function Landing() {
           <PersonaSection />
           <HowItWorksSection />
           <PricingSection onPremium={goOnboarding} />
+          <EarlyAccessSection />
           <FAQSection />
           <CTASection onPremium={goOnboarding} />
           <SiteFooter />

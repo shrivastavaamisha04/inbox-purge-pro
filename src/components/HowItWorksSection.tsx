@@ -35,8 +35,8 @@ const STEPS = [
 
 export default function HowItWorksSection() {
   return (
-    <section id="how-it-works" className="py-24" style={{ background: C.cream }}>
-      <div className="container mx-auto px-6">
+    <section id="how-it-works" className="py-12 md:py-24" style={{ background: C.cream }}>
+      <div className="container mx-auto px-4 md:px-6">
         <SectionHeading
           label="⚡ Quick start"
           title="Inbox Zero in 4 Steps"

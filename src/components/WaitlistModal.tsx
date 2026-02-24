@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { C } from '../lib/design'
 
+const API_URL = import.meta.env.VITE_API_URL
+
 const TARGET = new Date(Date.now() + 24 * 60 * 60 * 1000)
 
 function getCountdown() {
@@ -95,10 +97,10 @@ export default function WaitlistModal({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const data = new FormData(e.currentTarget)
-    await fetch('https://formspree.io/f/xwvnreva', {
-      method: 'POST',
-      body: data,
-      headers: { Accept: 'application/json' },
+    await fetch(`${API_URL}/api/waitlist/signup`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ name: data.get('name'), email: data.get('email') }),
     })
     setSubmitted(true)
   }
@@ -197,7 +199,16 @@ export default function WaitlistModal({
                         Join the waitlist and be the first to clean your inbox
                       </p>
 
-                      <form onSubmit={handleSubmit} className="space-y-4">
+                      <form onSubmit={handleSubmit} className="space-y-3">
+                        <input
+                          type="text"
+                          name="name"
+                          placeholder="Your name"
+                          className="w-full px-4 py-3.5 rounded-xl text-sm outline-none transition-all"
+                          style={{ background: C.cream, border: `1.5px solid ${C.border}`, color: C.text }}
+                          onFocus={(e) => (e.target.style.borderColor = C.orange)}
+                          onBlur={(e)  => (e.target.style.borderColor = C.border)}
+                        />
                         <input
                           type="email"
                           name="email"

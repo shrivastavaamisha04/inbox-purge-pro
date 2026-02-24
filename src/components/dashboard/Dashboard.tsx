@@ -892,6 +892,7 @@ export default function Dashboard() {
   const [showPayModal,     setShowPayModal]     = useState(false)
   const [showSignOutModal, setShowSignOutModal] = useState(false)
   const [addingAccount,    setAddingAccount]    = useState(false)
+  const [mobileMenuOpen,   setMobileMenuOpen]   = useState(false)
 
   const [emails,       setEmails]       = useState<Email[]>([])
   const [summary,      setSummary]      = useState<Summary | null>(null)
@@ -1186,7 +1187,7 @@ export default function Dashboard() {
 
   // ── Authenticated ────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#FAF8F5] p-6">
+    <div className="min-h-screen bg-[#FAF8F5]">
       {/* Sign out confirmation modal */}
       {showSignOutModal && (
         <SignOutModal
@@ -1214,10 +1215,39 @@ export default function Dashboard() {
         />
       )}
 
-      <div className="max-w-6xl mx-auto space-y-5">
+      {/* Mobile sidebar overlay backdrop */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/40 md:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
 
-        {/* Top bar */}
-        <div className="bg-white rounded-xl shadow-sm p-5 flex justify-between items-center">
+      {/* Mobile top header */}
+      <div className="md:hidden bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between sticky top-0 z-30">
+        <div className="flex items-center gap-2">
+          <h1 className="text-base font-bold text-gray-900">📬 Inbox Purge Pro</h1>
+          {paymentStatus?.status === 'active' && (
+            <span className="px-2 py-0.5 rounded-full text-xs font-bold text-white" style={{ background: 'linear-gradient(135deg,#FF6B35,#FF8C42)' }}>✨</span>
+          )}
+        </div>
+        <button
+          onClick={() => setMobileMenuOpen(true)}
+          className="w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-lg"
+          style={{ background: '#FAF8F5', border: '1px solid #E8E4DF' }}
+          aria-label="Open rules sidebar"
+        >
+          <span className="block w-5 h-0.5 rounded-full bg-gray-700" />
+          <span className="block w-5 h-0.5 rounded-full bg-gray-700" />
+          <span className="block w-5 h-0.5 rounded-full bg-gray-700" />
+        </button>
+      </div>
+
+      <div className="p-4 md:p-6">
+        <div className="max-w-6xl mx-auto space-y-5">
+
+        {/* Desktop top bar */}
+        <div className="hidden md:flex bg-white rounded-xl shadow-sm p-5 justify-between items-center">
           <div className="flex items-center gap-3">
             <h1 className="text-xl font-bold text-gray-900">📬 Inbox Purge Pro</h1>
             {paymentStatus?.status === 'active' && (
@@ -1269,37 +1299,54 @@ export default function Dashboard() {
         {/* Main layout: sidebar + content */}
         <div className="flex gap-5 items-start">
 
-          {/* Premium sidebar */}
-          <PremiumSidebar
-            persona={persona}
-            rules={rules}
-            accessToken={getAccessToken()}
-            userEmail={userEmail}
-            onAddRule={(text) => {
-              const next = [...rules, { id: `rule_${Date.now()}`, text, enabled: true }]
-              setRules(next)
-              saveRulesToApi(userEmail, next)
-            }}
-            onToggleRule={(id) => {
-              const next = rules.map((r) => r.id === id ? { ...r, enabled: !r.enabled } : r)
-              setRules(next)
-              saveRulesToApi(userEmail, next)
-            }}
-            onDeleteRule={(id) => {
-              const next = rules.filter((r) => r.id !== id)
-              setRules(next)
-              saveRulesToApi(userEmail, next)
-            }}
-            onAddPrebuiltRule={(rule) => {
-              const next = [...rules, rule]
-              setRules(next)
-              saveRulesToApi(userEmail, next)
-            }}
-            onBulkUpdateRules={(next) => {
-              setRules(next)
-              saveRulesToApi(userEmail, next)
-            }}
-          />
+          {/* Premium sidebar — fixed overlay on mobile, inline on desktop */}
+          <div className={`
+            fixed inset-y-0 left-0 z-50 w-80 md:relative md:inset-auto md:z-auto md:w-auto
+            transition-transform duration-300 md:transition-none
+            ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+          `}>
+            {/* Mobile close button inside sidebar header area — injected via wrapper */}
+            <div className="md:hidden absolute top-3 right-3 z-10">
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-7 h-7 flex items-center justify-center rounded-full text-white/80 hover:text-white text-lg leading-none"
+                style={{ background: 'rgba(0,0,0,0.15)' }}
+                aria-label="Close sidebar"
+              >
+                ×
+              </button>
+            </div>
+            <PremiumSidebar
+              persona={persona}
+              rules={rules}
+              accessToken={getAccessToken()}
+              userEmail={userEmail}
+              onAddRule={(text) => {
+                const next = [...rules, { id: `rule_${Date.now()}`, text, enabled: true }]
+                setRules(next)
+                saveRulesToApi(userEmail, next)
+              }}
+              onToggleRule={(id) => {
+                const next = rules.map((r) => r.id === id ? { ...r, enabled: !r.enabled } : r)
+                setRules(next)
+                saveRulesToApi(userEmail, next)
+              }}
+              onDeleteRule={(id) => {
+                const next = rules.filter((r) => r.id !== id)
+                setRules(next)
+                saveRulesToApi(userEmail, next)
+              }}
+              onAddPrebuiltRule={(rule) => {
+                const next = [...rules, rule]
+                setRules(next)
+                saveRulesToApi(userEmail, next)
+              }}
+              onBulkUpdateRules={(next) => {
+                setRules(next)
+                saveRulesToApi(userEmail, next)
+              }}
+            />
+          </div>
 
           {/* Email panel */}
           <div className="flex-1 min-w-0 space-y-5">
@@ -1322,7 +1369,7 @@ export default function Dashboard() {
             ) : (
               <>
                 {summary && (
-                  <div className="grid grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {[
                       { label: 'Total Scanned', value: summary.total,     color: 'bg-gray-50',   text: 'text-gray-700'  },
                       { label: '🗑️ High Trash', value: summary.highTrash, color: 'bg-red-50',    text: 'text-red-600'   },
@@ -1373,7 +1420,8 @@ export default function Dashboard() {
                 </div>
 
                 <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-                  <div className="grid grid-cols-[auto_1fr_1fr_auto_auto] gap-4 px-4 py-3 border-b bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                  {/* Desktop table header */}
+                  <div className="hidden md:grid grid-cols-[auto_1fr_1fr_auto_auto] gap-4 px-4 py-3 border-b bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wide">
                     <input type="checkbox"
                       checked={selected.size === filteredEmails.length && filteredEmails.length > 0}
                       onChange={toggleSelectAll}
@@ -1383,25 +1431,51 @@ export default function Dashboard() {
                     <span>Score</span>
                     <span>Date</span>
                   </div>
+                  {/* Mobile select-all */}
+                  <div className="md:hidden px-4 py-2 border-b bg-gray-50 flex items-center gap-2 text-xs text-gray-500">
+                    <input type="checkbox"
+                      checked={selected.size === filteredEmails.length && filteredEmails.length > 0}
+                      onChange={toggleSelectAll}
+                      className="w-4 h-4 accent-orange-500" />
+                    <span>Select all</span>
+                  </div>
                   {filteredEmails.length === 0 ? (
                     <p className="text-center text-gray-400 py-10">No emails in this category.</p>
                   ) : (
                     filteredEmails.map((email) => (
                       <div key={email.id} onClick={() => toggleSelect(email.id)}
-                        className={`grid grid-cols-[auto_1fr_1fr_auto_auto] gap-4 px-4 py-3 border-b last:border-0 cursor-pointer transition hover:bg-gray-50 ${selected.has(email.id) ? 'bg-orange-50' : ''}`}>
-                        <input type="checkbox" checked={selected.has(email.id)} onChange={() => toggleSelect(email.id)}
-                          onClick={(e) => e.stopPropagation()} className="w-4 h-4 accent-orange-500 mt-1" />
-                        <div className="min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">{formatFrom(email.from)}</p>
-                          <p className="text-xs text-gray-400 truncate">{email.snippet}</p>
+                        className={`border-b last:border-0 cursor-pointer transition hover:bg-gray-50 ${selected.has(email.id) ? 'bg-orange-50' : ''}`}>
+                        {/* Desktop row */}
+                        <div className="hidden md:grid grid-cols-[auto_1fr_1fr_auto_auto] gap-4 px-4 py-3">
+                          <input type="checkbox" checked={selected.has(email.id)} onChange={() => toggleSelect(email.id)}
+                            onClick={(e) => e.stopPropagation()} className="w-4 h-4 accent-orange-500 mt-1" />
+                          <div className="min-w-0">
+                            <p className="text-sm font-medium text-gray-900 truncate">{formatFrom(email.from)}</p>
+                            <p className="text-xs text-gray-400 truncate">{email.snippet}</p>
+                          </div>
+                          <p className="text-sm text-gray-700 truncate self-center">{email.subject || '(no subject)'}</p>
+                          <span className={`text-xs font-semibold px-2 py-1 rounded-full self-center whitespace-nowrap ${scoreColor(email.trashiness_score)}`}>
+                            {email.trashiness_score}/10 {scoreLabel(email.trashiness_score)}
+                          </span>
+                          <p className="text-xs text-gray-400 self-center whitespace-nowrap">
+                            {new Date(email.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          </p>
                         </div>
-                        <p className="text-sm text-gray-700 truncate self-center">{email.subject || '(no subject)'}</p>
-                        <span className={`text-xs font-semibold px-2 py-1 rounded-full self-center whitespace-nowrap ${scoreColor(email.trashiness_score)}`}>
-                          {email.trashiness_score}/10 {scoreLabel(email.trashiness_score)}
-                        </span>
-                        <p className="text-xs text-gray-400 self-center whitespace-nowrap">
-                          {new Date(email.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                        </p>
+                        {/* Mobile row */}
+                        <div className="md:hidden flex items-start gap-3 px-4 py-3">
+                          <input type="checkbox" checked={selected.has(email.id)} onChange={() => toggleSelect(email.id)}
+                            onClick={(e) => e.stopPropagation()} className="w-4 h-4 accent-orange-500 mt-1 flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between gap-2">
+                              <p className="text-sm font-medium text-gray-900 truncate">{formatFrom(email.from)}</p>
+                              <span className={`text-xs font-semibold px-2 py-0.5 rounded-full flex-shrink-0 ${scoreColor(email.trashiness_score)}`}>
+                                {scoreLabel(email.trashiness_score)}
+                              </span>
+                            </div>
+                            <p className="text-sm text-gray-700 truncate mt-0.5">{email.subject || '(no subject)'}</p>
+                            <p className="text-xs text-gray-400 mt-0.5">{new Date(email.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
+                          </div>
+                        </div>
                       </div>
                     ))
                   )}
@@ -1409,6 +1483,7 @@ export default function Dashboard() {
               </>
             )}
           </div>
+        </div>
         </div>
       </div>
     </div>

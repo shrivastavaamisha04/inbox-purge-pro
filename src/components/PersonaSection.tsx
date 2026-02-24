@@ -54,8 +54,8 @@ export default function PersonaSection() {
   const [selected, setSelected] = useState<number | null>(null)
 
   return (
-    <section id="personas" className="py-24" style={{ background: C.creamWarm }}>
-      <div className="container mx-auto px-6">
+    <section id="personas" className="py-12 md:py-24" style={{ background: C.creamWarm }}>
+      <div className="container mx-auto px-4 md:px-6">
         <SectionHeading
           label="🧩 Persona Templates"
           title="Or Start With a Template That Matches You"

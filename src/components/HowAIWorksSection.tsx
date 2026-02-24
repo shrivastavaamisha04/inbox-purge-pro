@@ -62,8 +62,8 @@ function SparkLine() {
 
 export default function HowAIWorksSection() {
   return (
-    <section id="how-ai-works" className="py-24" style={{ background: C.cream }}>
-      <div className="container mx-auto px-6">
+    <section id="how-ai-works" className="py-12 md:py-24" style={{ background: C.cream }}>
+      <div className="container mx-auto px-4 md:px-6">
         <SectionHeading
           label="🧠 Smart AI"
           title="Four Ways Inbox Purge Gets Smarter"

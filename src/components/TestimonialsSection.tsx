@@ -10,8 +10,8 @@ const SKELETON_CARDS = [
 
 export default function TestimonialsSection() {
   return (
-    <section id="testimonials" className="py-24" style={{ background: C.white }}>
-      <div className="container mx-auto px-6">
+    <section id="testimonials" className="py-12 md:py-24" style={{ background: C.white }}>
+      <div className="container mx-auto px-4 md:px-6">
         <SectionHeading
           label="✨ Coming Soon"
           title="Real Results from Real Users"

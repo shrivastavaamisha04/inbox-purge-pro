@@ -77,8 +77,8 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 export default function FAQSection() {
   return (
-    <section id="faq" className="py-24" style={{ background: C.white }}>
-      <div className="container mx-auto px-6">
+    <section id="faq" className="py-12 md:py-24" style={{ background: C.white }}>
+      <div className="container mx-auto px-4 md:px-6">
         <SectionHeading
           label="❓ FAQs"
           title="Everything You Need to Know"

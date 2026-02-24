@@ -9,7 +9,7 @@ const TRUST_BADGES = [
 export default function CTASection({ onPremium }: { onPremium: () => void }) {
   return (
     <section
-      className="py-24 text-center"
+      className="py-12 md:py-24 text-center"
       style={{ background: `linear-gradient(135deg, ${C.orange} 0%, ${C.orangeLight} 40%, ${C.orangeDark} 100%)` }}
     >
       <motion.div
@@ -17,9 +17,9 @@ export default function CTASection({ onPremium }: { onPremium: () => void }) {
         initial="hidden"
         whileInView="visible"
         viewport={VP}
-        className="container mx-auto px-6 max-w-3xl"
+        className="container mx-auto px-4 md:px-6 max-w-3xl"
       >
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-5 leading-tight">
+        <h2 className="text-3xl md:text-5xl font-bold text-white mb-5 leading-tight">
           Ready for an Inbox That Actually Knows You?
         </h2>
         <p className="text-lg mb-10 text-white/80 max-w-xl mx-auto">

@@ -65,7 +65,7 @@ function DemoPanel({ demoIdx, active }: { demoIdx: number; active: boolean }) {
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -16 }}
         transition={{ duration: 0.3 }}
-        className="grid md:grid-cols-2 gap-0 md:gap-0 rounded-2xl overflow-hidden"
+        className="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-2xl overflow-hidden"
         style={{ border: `1px solid ${C.border}`, boxShadow: '0 4px 24px rgba(0,0,0,0.07)' }}
       >
         {/* Left: user input */}
@@ -167,8 +167,8 @@ export default function CustomRulesSection({ onPremium }: { onPremium: () => voi
   }, [active, demoIdx, charsDone])
 
   return (
-    <section id="custom-rules" className="py-24" style={{ background: C.white }}>
-      <div className="container mx-auto px-6" ref={ref}>
+    <section id="custom-rules" className="py-12 md:py-24" style={{ background: C.white }}>
+      <div className="container mx-auto px-4 md:px-6" ref={ref}>
         <SectionHeading
           label="📝 Custom Rules"
           title={<><span className="shimmer-text">Just Tell Us What You Want.</span></>}

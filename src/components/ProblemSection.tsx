@@ -22,8 +22,8 @@ const CARDS = [
 
 export default function ProblemSection() {
   return (
-    <section id="problem" className="py-24" style={{ background: C.white }}>
-      <div className="container mx-auto px-6">
+    <section id="problem" className="py-12 md:py-24" style={{ background: C.white }}>
+      <div className="container mx-auto px-4 md:px-6">
         <SectionHeading
           label="😩 Sound familiar?"
           title="Email is broken for everyone"

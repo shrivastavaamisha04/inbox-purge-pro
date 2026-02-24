@@ -10,7 +10,7 @@ const heroContainer = {
 // ── Floating before/after email cards ────────────────────────────────────────
 function EmailVisual() {
   return (
-    <div className="relative w-full h-[420px] flex items-center justify-center select-none">
+    <div className="relative w-full h-[280px] md:h-[420px] flex items-center justify-center select-none">
 
       {/* BEFORE card */}
       <motion.div
@@ -93,7 +93,7 @@ export default function HeroSection({ loading, onOpenModal }: { loading: boolean
     document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
-    <section className="container mx-auto px-6 pt-20 pb-10 md:pt-28 md:pb-16">
+    <section className="container mx-auto px-4 md:px-6 pt-20 pb-10 md:pt-28 md:pb-16">
       <div className="flex flex-col md:flex-row items-center gap-12 md:gap-8">
 
         {/* ── Left: text ─────────────────────────────────────────────────── */}
@@ -129,7 +129,7 @@ export default function HeroSection({ loading, onOpenModal }: { loading: boolean
           {/* Headline */}
           <motion.h1
             variants={fadeUpChild}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-5 leading-[1.06] tracking-tight"
+            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-5 leading-[1.06] tracking-tight"
             style={{ color: C.navy }}
           >
             Your Inbox,{' '}

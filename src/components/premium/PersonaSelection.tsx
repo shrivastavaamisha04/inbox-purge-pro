@@ -167,7 +167,7 @@ export default function PersonaSelection() {
 
   return (
     <div
-      className="min-h-screen overflow-y-auto px-6 py-8 flex flex-col items-center"
+      className="min-h-screen overflow-y-auto px-4 md:px-6 py-8 flex flex-col items-center"
       style={{ background: C.cream }}
     >
       <AnimatePresence mode="wait">
@@ -213,7 +213,7 @@ export default function PersonaSelection() {
                     key={persona.id}
                     variants={cardVariant}
                     onClick={() => setSelected(persona.id)}
-                    className="text-left rounded-2xl p-5 transition-all h-full flex flex-col"
+                    className="text-left rounded-2xl p-4 md:p-5 transition-all h-full flex flex-col"
                     style={{
                       background: isSelected ? 'rgba(255,107,53,0.06)' : C.white,
                       border:     isSelected ? `2px solid ${C.orange}` : `1.5px solid ${C.border}`,

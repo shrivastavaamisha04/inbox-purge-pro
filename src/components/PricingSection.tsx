@@ -23,8 +23,8 @@ export default function PricingSection({ onPremium }: { onPremium: () => void })
   const [showAll, setShowAll] = useState(false)
 
   return (
-    <section id="pricing" className="py-24" style={{ background: C.creamWarm }}>
-      <div className="container mx-auto px-6">
+    <section id="pricing" className="py-12 md:py-24" style={{ background: C.creamWarm }}>
+      <div className="container mx-auto px-4 md:px-6">
         <SectionHeading
           label="💸 Simple pricing"
           title="One plan. Everything included."
