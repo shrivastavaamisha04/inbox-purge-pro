@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 const API_URL      = import.meta.env.VITE_API_URL
 const ADMIN_EMAIL  = import.meta.env.VITE_ADMIN_EMAIL
@@ -50,7 +49,6 @@ function statusBadge(user: User) {
 }
 
 export default function AdminDashboard() {
-  const navigate   = useNavigate()
   const [adminKey, setAdminKey]   = useState<string>(() => localStorage.getItem('adminKey') || '')
   const [keyInput, setKeyInput]   = useState('')
   const [stats,    setStats]      = useState<Stats | null>(null)
@@ -64,13 +62,6 @@ export default function AdminDashboard() {
   const [waitlistLoading, setWaitlistLoading] = useState(false)
   const [invitingEmail,   setInvitingEmail]   = useState<string | null>(null)
 
-  // Redirect non-admin users
-  useEffect(() => {
-    const userEmail = localStorage.getItem('userEmail')
-    if (ADMIN_EMAIL && userEmail && userEmail !== ADMIN_EMAIL) {
-      navigate('/')
-    }
-  }, [navigate])
 
   const fetchData = useCallback(async (key: string) => {
     setLoading(true)
