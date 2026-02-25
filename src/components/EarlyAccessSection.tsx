@@ -49,11 +49,11 @@ export default function EarlyAccessSection() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4"
             style={{ background: `linear-gradient(135deg, ${C.orange}, ${C.orangeLight})`, color: '#fff' }}
           >
-            🔒 Private Beta
+            🔒 Private BETA
           </div>
 
           <h2 className="text-2xl md:text-3xl font-bold mb-3 leading-tight" style={{ color: C.navy }}>
-            Join the Private Beta
+            Join the Private BETA
           </h2>
           <p className="text-sm md:text-base mb-6 leading-relaxed" style={{ color: C.textMid }}>
             We're rolling out access gradually. Drop your email and we'll invite you when your spot is ready.

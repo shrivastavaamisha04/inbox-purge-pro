@@ -22,7 +22,7 @@ const CARDS = [
 
 export default function ProblemSection() {
   return (
-    <section id="problem" className="py-12 md:py-24" style={{ background: C.white }}>
+    <section id="problem" className="py-8 md:py-24" style={{ background: C.white }}>
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeading
           label="😩 Sound familiar?"
@@ -40,12 +40,12 @@ export default function ProblemSection() {
           {CARDS.map((card) => (
             <motion.div key={card.title} variants={fadeUpChild}>
               <TiltCard
-                className="p-8 h-full"
+                className="p-5 md:p-8 h-full"
                 style={{ background: C.cream, border: `1px solid ${C.border}`, boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}
               >
-                <div className="text-4xl mb-5">{card.emoji}</div>
-                <h3 className="text-xl font-bold mb-3" style={{ color: C.navy }}>{card.title}</h3>
-                <p className="leading-relaxed" style={{ color: C.textMid }}>{card.desc}</p>
+                <div className="text-3xl md:text-4xl mb-3 md:mb-5">{card.emoji}</div>
+                <h3 className="text-base md:text-xl font-bold md:mb-3" style={{ color: C.navy }}>{card.title}</h3>
+                <p className="hidden md:block leading-relaxed" style={{ color: C.textMid }}>{card.desc}</p>
               </TiltCard>
             </motion.div>
           ))}

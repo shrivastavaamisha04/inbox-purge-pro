@@ -62,7 +62,7 @@ function SparkLine() {
 
 export default function HowAIWorksSection() {
   return (
-    <section id="how-ai-works" className="py-12 md:py-24" style={{ background: C.cream }}>
+    <section id="how-ai-works" className="py-8 md:py-24" style={{ background: C.cream }}>
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeading
           label="🧠 Smart AI"
@@ -80,19 +80,19 @@ export default function HowAIWorksSection() {
               viewport={VP}
             >
               <TiltCard
-                className="p-8 h-full flex flex-col"
+                className="p-5 md:p-8 h-full flex flex-col"
                 style={{ background: C.white, border: `1px solid ${C.border}`, boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}
               >
                 {/* Icon */}
                 <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-5"
+                  className="w-10 h-10 md:w-14 md:h-14 rounded-2xl flex items-center justify-center text-xl md:text-2xl mb-3 md:mb-5"
                   style={{ background: 'rgba(255,107,53,0.08)' }}
                 >
                   {card.icon}
                 </div>
 
-                <h3 className="text-xl font-bold mb-3" style={{ color: C.navy }}>{card.title}</h3>
-                <p className="leading-relaxed mb-5 flex-1" style={{ color: C.textMid }}>{card.desc}</p>
+                <h3 className="text-base md:text-xl font-bold mb-0 md:mb-3" style={{ color: C.navy }}>{card.title}</h3>
+                <p className="hidden md:block leading-relaxed mb-5 flex-1" style={{ color: C.textMid }}>{card.desc}</p>
 
                 {/* Stat / Visual */}
                 {card.icon === '📈' ? (

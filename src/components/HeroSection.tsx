@@ -115,8 +115,8 @@ export default function HeroSection({ loading, onOpenModal }: { loading: boolean
             </motion.div>
           </motion.div>
 
-          {/* Badge */}
-          <motion.div variants={fadeUpChild} className="flex justify-center md:justify-start mb-5">
+          {/* Badge — hidden on mobile */}
+          <motion.div variants={fadeUpChild} className="hidden md:flex justify-center md:justify-start mb-5">
             <div
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium"
               style={{ background: 'rgba(255,107,53,0.08)', border: `1px solid rgba(255,107,53,0.22)`, color: C.orange }}
@@ -142,8 +142,8 @@ export default function HeroSection({ loading, onOpenModal }: { loading: boolean
             AI that learns from behavior, not generic rules.
           </motion.p>
 
-          {/* Taglines */}
-          <motion.div variants={fadeUpChild} className="flex flex-col gap-2 mb-8">
+          {/* Taglines — hidden on mobile */}
+          <motion.div variants={fadeUpChild} className="hidden md:flex flex-col gap-2 mb-8">
             <div className="flex items-center gap-2 justify-center md:justify-start text-base font-medium" style={{ color: C.navyMid }}>
               🧠 <span><strong>Behavioral AI</strong> that learns your preferences — not generic rules</span>
             </div>
@@ -166,9 +166,9 @@ export default function HeroSection({ loading, onOpenModal }: { loading: boolean
           </motion.p>
         </motion.div>
 
-        {/* ── Right: visual ─────────────────────────────────────────────────── */}
+        {/* ── Right: visual — hidden on mobile ─────────────────────────────── */}
         <motion.div
-          className="flex-1 w-full max-w-sm md:max-w-none"
+          className="hidden md:block flex-1 w-full max-w-sm md:max-w-none"
           initial={{ opacity: 0, x: 40 }}
           animate={loading ? { opacity: 0, x: 40 } : { opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.5, ease }}

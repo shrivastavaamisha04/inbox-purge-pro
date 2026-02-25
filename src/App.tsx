@@ -172,8 +172,8 @@ function Landing() {
           <HeroSection loading={loading} onOpenModal={goOnboarding} />
           <ProblemSection />
           <HowAIWorksSection />
-          <CustomRulesSection onPremium={goOnboarding} />
-          <PersonaSection />
+          <div className="hidden md:block"><CustomRulesSection onPremium={goOnboarding} /></div>
+          <div className="hidden md:block"><PersonaSection /></div>
           <HowItWorksSection />
           <PricingSection onPremium={goOnboarding} />
           <EarlyAccessSection />
