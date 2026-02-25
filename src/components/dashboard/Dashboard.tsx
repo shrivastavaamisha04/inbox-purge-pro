@@ -312,10 +312,23 @@ function PremiumSidebar({
                     />
                     <div className="flex-1 min-w-0">
                       {rule.prebuilt && rule.domain && (
-                        <span className="text-xs px-1.5 py-0.5 rounded mb-1 inline-block font-medium"
-                          style={{ background: 'rgba(255,107,53,0.1)', color: '#FF6B35' }}>
-                          {rule.domain}
-                        </span>
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <span className="text-xs px-1.5 py-0.5 rounded font-medium"
+                            style={{ background: 'rgba(255,107,53,0.1)', color: '#FF6B35' }}>
+                            {rule.domain}
+                          </span>
+                          {(() => {
+                            const p = rule.priority ?? prebuiltLibrary.find(l => l.id === rule.id)?.priority
+                            if (!p) return null
+                            return (
+                              <span className="text-xs font-medium" style={{
+                                color: p === 'high' ? '#EF4444' : p === 'medium' ? '#F59E0B' : '#9CA3AF'
+                              }}>
+                                {p === 'high' ? '🔴 High' : p === 'medium' ? '🟡 Medium' : '⚪ Low'}
+                              </span>
+                            )
+                          })()}
+                        </div>
                       )}
                       <span
                         className="leading-snug block"
@@ -323,17 +336,6 @@ function PremiumSidebar({
                       >
                         {rule.text}
                       </span>
-                      {rule.prebuilt && (() => {
-                        const p = rule.priority ?? prebuiltLibrary.find(l => l.id === rule.id)?.priority
-                        if (!p) return null
-                        return (
-                          <span className="text-xs font-medium mt-0.5 block" style={{
-                            color: p === 'high' ? '#EF4444' : p === 'medium' ? '#F59E0B' : '#9CA3AF'
-                          }}>
-                            {p === 'high' ? '🔴 High' : p === 'medium' ? '🟡 Medium' : '⚪ Low'}
-                          </span>
-                        )
-                      })()}
                       {accessToken && (
                         <button
                           onClick={async () => {
