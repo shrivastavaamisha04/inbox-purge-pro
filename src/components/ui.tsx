@@ -87,7 +87,7 @@ export function PrimaryButton({
       whileTap={{ scale: 0.97 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       style={{ background: `linear-gradient(135deg, ${C.orange}, ${C.orangeLight})`, boxShadow: `0 8px 24px rgba(255,107,53,0.28)` }}
-      className={`text-white px-8 py-4 rounded-xl font-semibold text-lg ${className}`}
+      className={`text-white px-5 py-2.5 md:px-8 md:py-4 rounded-xl font-semibold text-sm md:text-lg ${className}`}
     >
       {children}
     </motion.button>
@@ -109,7 +109,7 @@ export function SecondaryButton({
       whileTap={{ scale: 0.97 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       style={{ borderColor: C.orange, color: C.orange }}
-      className={`bg-white border-2 px-8 py-4 rounded-xl font-semibold text-lg ${className}`}
+      className={`bg-white border-2 px-5 py-2.5 md:px-8 md:py-4 rounded-xl font-semibold text-sm md:text-lg ${className}`}
     >
       {children}
     </motion.button>
