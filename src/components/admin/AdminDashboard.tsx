@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 
 const API_URL      = import.meta.env.VITE_API_URL
-const ADMIN_EMAIL  = import.meta.env.VITE_ADMIN_EMAIL
 
 type Stats = {
   users:   { total: number; trial: number; active: number; expired: number; newToday: number; newThisWeek: number }
