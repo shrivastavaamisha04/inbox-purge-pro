@@ -39,6 +39,7 @@ type Rule = {
   prebuilt?: boolean
   domain?: string
   label?: string
+  priority?: string
 }
 
 const RULE_PLACEHOLDERS = [
@@ -115,7 +116,9 @@ function PremiumSidebar({
       const res = await fetch(`${API_URL}/api/users/prebuilt-rules`)
       const data = await res.json()
       setPrebuiltLibrary(data.rules || [])
-      setLibraryGrouped(data.grouped || {})
+      const grouped = data.grouped || {}
+      setLibraryGrouped(grouped)
+      setLibraryDomainFilter(Object.keys(grouped)[0] || '')
     } catch { /* non-fatal */ }
   }
 
@@ -204,11 +207,12 @@ function PremiumSidebar({
   const hasCustomRules = rules.some(r => !r.prebuilt)
   const showRuleFilter = rules.length > 0 && ruleDomains.length > 0 && (hasCustomRules || ruleDomains.length > 1)
   const ruleFilterTabs = [...(hasCustomRules ? ['custom'] : []), ...ruleDomains]
-  const filteredRules = ruleFilter === 'all'
+  const activeRuleFilter = ruleFilterTabs.includes(ruleFilter) ? ruleFilter : (ruleFilterTabs[0] || 'all')
+  const filteredRules = activeRuleFilter === 'all'
     ? rules
-    : ruleFilter === 'custom'
+    : activeRuleFilter === 'custom'
       ? rules.filter(r => !r.prebuilt)
-      : rules.filter(r => r.domain === ruleFilter)
+      : rules.filter(r => r.domain === activeRuleFilter)
 
   return (
     <div
@@ -275,8 +279,8 @@ function PremiumSidebar({
                     onClick={() => setRuleFilter(f)}
                     className="flex-shrink-0 text-xs px-2.5 py-1 rounded-full font-medium transition"
                     style={{
-                      background: ruleFilter === f ? '#FF6B35' : '#F0EDE9',
-                      color: ruleFilter === f ? '#fff' : '#6B7280',
+                      background: activeRuleFilter === f ? '#FF6B35' : '#F0EDE9',
+                      color: activeRuleFilter === f ? '#fff' : '#6B7280',
                     }}
                   >
                     {f === 'custom' ? '✏️ Custom' : f}
@@ -315,6 +319,13 @@ function PremiumSidebar({
                       >
                         {rule.text}
                       </span>
+                      {rule.prebuilt && rule.priority && (
+                        <span className="text-xs font-medium mt-0.5 block" style={{
+                          color: rule.priority === 'high' ? '#EF4444' : rule.priority === 'medium' ? '#F59E0B' : '#9CA3AF'
+                        }}>
+                          {rule.priority === 'high' ? '🔴 High' : rule.priority === 'medium' ? '🟡 Medium' : '⚪ Low'}
+                        </span>
+                      )}
                       {accessToken && (
                         <button
                           onClick={async () => {
@@ -497,6 +508,7 @@ function PremiumSidebar({
                         prebuilt: true,
                         domain: lr.domain,
                         label: lr.label,
+                        priority: lr.priority,
                       }))
                     next = [
                       ...rules.map(r => r.prebuilt ? { ...r, enabled: true } : r),
@@ -521,7 +533,7 @@ function PremiumSidebar({
                 {Object.keys(libraryGrouped).map(domain => (
                   <button
                     key={domain}
-                    onClick={() => setLibraryDomainFilter(prev => prev === domain ? '' : domain)}
+                    onClick={() => setLibraryDomainFilter(domain)}
                     className="flex-shrink-0 text-xs px-2.5 py-1 rounded-full font-medium transition"
                     style={{
                       background: libraryDomainFilter === domain ? '#FF6B35' : '#F0EDE9',
@@ -577,6 +589,7 @@ function PremiumSidebar({
                                   prebuilt: true,
                                   domain: libRule.domain,
                                   label: libRule.label,
+                                  priority: libRule.priority,
                                 })
                               }
                             }}
