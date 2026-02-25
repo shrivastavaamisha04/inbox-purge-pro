@@ -1,8 +1,23 @@
 import { C } from '../lib/design'
 
-const LINKS = {
-  Product: ['Features', 'Pricing', 'How It Works', 'Personas'],
-  Company: ['About', 'Contact'],
+const PRODUCT_LINKS = [
+  { label: 'Features',     href: '#how-ai-works', mobileHide: false },
+  { label: 'Pricing',      href: '#pricing',      mobileHide: false },
+  { label: 'How It Works', href: '#how-it-works', mobileHide: false },
+  { label: 'Personas',     href: '#personas',     mobileHide: true  },
+]
+
+const COMPANY_LINKS = [
+  { label: 'About',   href: '#problem',                         mobileHide: false },
+  { label: 'Contact', href: 'mailto:amishashrivastavaa@gmail.com', mobileHide: false },
+]
+
+function scrollTo(href: string) {
+  if (href.startsWith('mailto:')) {
+    window.location.href = href
+    return
+  }
+  document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
 }
 
 export default function SiteFooter() {
@@ -34,27 +49,45 @@ export default function SiteFooter() {
             </div>
           </div>
 
-          {/* Link columns */}
-          {Object.entries(LINKS).map(([category, items]) => (
-            <div key={category}>
-              <div className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: 'rgba(255,255,255,0.35)' }}>
-                {category}
-              </div>
-              <ul className="space-y-3">
-                {items.map((item) => (
-                  <li key={item}>
-                    <a
-                      href="#"
-                      className="text-sm transition-colors hover:text-white"
-                      style={{ color: 'rgba(255,255,255,0.55)' }}
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+          {/* Product links */}
+          <div>
+            <div className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: 'rgba(255,255,255,0.35)' }}>
+              Product
             </div>
-          ))}
+            <ul className="space-y-3">
+              {PRODUCT_LINKS.map((link) => (
+                <li key={link.label} className={link.mobileHide ? 'hidden md:block' : ''}>
+                  <button
+                    onClick={() => scrollTo(link.href)}
+                    className="text-sm transition-colors hover:text-white text-left"
+                    style={{ color: 'rgba(255,255,255,0.55)' }}
+                  >
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company links */}
+          <div>
+            <div className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: 'rgba(255,255,255,0.35)' }}>
+              Company
+            </div>
+            <ul className="space-y-3">
+              {COMPANY_LINKS.map((link) => (
+                <li key={link.label}>
+                  <button
+                    onClick={() => scrollTo(link.href)}
+                    className="text-sm transition-colors hover:text-white text-left"
+                    style={{ color: 'rgba(255,255,255,0.55)' }}
+                  >
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Bottom bar */}
