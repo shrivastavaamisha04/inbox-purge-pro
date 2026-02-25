@@ -107,6 +107,7 @@ function PremiumSidebar({
   const [prebuiltLibrary,   setPrebuiltLibrary]   = useState<any[]>([])
   const [libraryGrouped,    setLibraryGrouped]    = useState<Record<string, any[]>>({})
   const [ruleFilter,        setRuleFilter]        = useState('all')
+  const [libraryDomainFilter, setLibraryDomainFilter] = useState<string>('')
   const phIdx = useRef(0)
 
   const fetchPrebuiltLibrary = async () => {
@@ -202,7 +203,7 @@ function PremiumSidebar({
   const ruleDomains = [...new Set(rules.filter(r => r.prebuilt && r.domain).map(r => r.domain as string))]
   const hasCustomRules = rules.some(r => !r.prebuilt)
   const showRuleFilter = rules.length > 0 && ruleDomains.length > 0 && (hasCustomRules || ruleDomains.length > 1)
-  const ruleFilterTabs = ['all', ...(hasCustomRules ? ['custom'] : []), ...ruleDomains]
+  const ruleFilterTabs = [...(hasCustomRules ? ['custom'] : []), ...ruleDomains]
   const filteredRules = ruleFilter === 'all'
     ? rules
     : ruleFilter === 'custom'
@@ -278,7 +279,7 @@ function PremiumSidebar({
                       color: ruleFilter === f ? '#fff' : '#6B7280',
                     }}
                   >
-                    {f === 'all' ? 'All' : f === 'custom' ? '✏️ Custom' : f}
+                    {f === 'custom' ? '✏️ Custom' : f}
                   </button>
                 ))}
               </div>
@@ -513,9 +514,31 @@ function PremiumSidebar({
               </div>
             </div>
 
+            {/* Domain filter tabs */}
+            {Object.keys(libraryGrouped).length > 0 && (
+              <div className="flex-shrink-0 flex gap-1.5 overflow-x-auto px-3 pt-3 pb-0"
+                style={{ scrollbarWidth: 'none' }}>
+                {Object.keys(libraryGrouped).map(domain => (
+                  <button
+                    key={domain}
+                    onClick={() => setLibraryDomainFilter(prev => prev === domain ? '' : domain)}
+                    className="flex-shrink-0 text-xs px-2.5 py-1 rounded-full font-medium transition"
+                    style={{
+                      background: libraryDomainFilter === domain ? '#FF6B35' : '#F0EDE9',
+                      color: libraryDomainFilter === domain ? '#fff' : '#6B7280',
+                    }}
+                  >
+                    {domain}
+                  </button>
+                ))}
+              </div>
+            )}
+
             {/* Domain sections */}
             <div className="flex-1 overflow-y-auto min-h-0 p-3 space-y-4">
-              {Object.entries(libraryGrouped).map(([domain, domainRules]) => {
+              {Object.entries(libraryGrouped)
+                .filter(([domain]) => !libraryDomainFilter || domain === libraryDomainFilter)
+                .map(([domain, domainRules]) => {
                 const activatedCount = domainRules.filter(r =>
                   rules.some(ur => ur.id === r.id && ur.enabled)
                 ).length
