@@ -123,6 +123,10 @@ function PremiumSidebar({
   }
 
   useEffect(() => {
+    fetchPrebuiltLibrary()
+  }, [])
+
+  useEffect(() => {
     const interval = setInterval(() => {
       phIdx.current = (phIdx.current + 1) % RULE_PLACEHOLDERS.length
       setPlaceholder(RULE_PLACEHOLDERS[phIdx.current])
@@ -319,13 +323,17 @@ function PremiumSidebar({
                       >
                         {rule.text}
                       </span>
-                      {rule.prebuilt && rule.priority && (
-                        <span className="text-xs font-medium mt-0.5 block" style={{
-                          color: rule.priority === 'high' ? '#EF4444' : rule.priority === 'medium' ? '#F59E0B' : '#9CA3AF'
-                        }}>
-                          {rule.priority === 'high' ? '🔴 High' : rule.priority === 'medium' ? '🟡 Medium' : '⚪ Low'}
-                        </span>
-                      )}
+                      {rule.prebuilt && (() => {
+                        const p = rule.priority ?? prebuiltLibrary.find(l => l.id === rule.id)?.priority
+                        if (!p) return null
+                        return (
+                          <span className="text-xs font-medium mt-0.5 block" style={{
+                            color: p === 'high' ? '#EF4444' : p === 'medium' ? '#F59E0B' : '#9CA3AF'
+                          }}>
+                            {p === 'high' ? '🔴 High' : p === 'medium' ? '🟡 Medium' : '⚪ Low'}
+                          </span>
+                        )
+                      })()}
                       {accessToken && (
                         <button
                           onClick={async () => {
@@ -462,7 +470,7 @@ function PremiumSidebar({
         )}
 
         {showRuleLibrary && (
-          <div className="absolute inset-x-0 top-0 z-20 flex flex-col rounded-xl overflow-hidden max-h-full"
+          <div className="absolute inset-0 z-20 flex flex-col rounded-xl overflow-hidden"
             style={{ background: '#FFFFFF', border: '1px solid #E8E4DF' }}>
 
             {/* Header */}
